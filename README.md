@@ -1,90 +1,204 @@
-# Heidelberg Motif Clustering [![Codacy Badge](https://app.codacy.com/project/badge/Grade/93d164647e654bf2a814f5101fdf3481)](https://www.codacy.com/gh/LocalClustering/HeidelbergMotifClustering/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LocalClustering/HeidelbergMotifClustering&amp;utm_campaign=Badge_Grade)[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FLocalClustering%2FHeidelbergMotifClustering.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FLocalClustering%2FHeidelbergMotifClustering?ref=badge_shield)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# Heidelberg Motif Clustering
 
-A widely-used operation on graphs is local clustering, i.e., extracting a well-characterized community around a seed node without the need to process the whole graph.  Recently local motif clustering has been proposed: it looks for a local cluster based on the distribution of motifs.  Since this local clustering perspective is relatively new, most approaches proposed for it are extensions of statistical and numerical methods previously used for edge-based local clustering, while the available combinatorial approaches are still few and relatively simple.  In this work, we build a hypergraph and a graph model which both represent the motif-distribution around the seed node. We solve these models using  sophisticated combinatorial algorithms designed for (hyper)graph partitioning as well as an adapted version of the max-flow quotient-cut improvement algorithm (MQI).
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/93d164647e654bf2a814f5101fdf3481)](https://www.codacy.com/gh/LocalClustering/HeidelbergMotifClustering/dashboard?utm_source=github.com&utm_medium=referral&utm_content=LocalClustering/HeidelbergMotifClustering&utm_campaign=Badge_Grade)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FLocalClustering%2FHeidelbergMotifClustering.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FLocalClustering%2FHeidelbergMotifClustering?ref=badge_shield)
+![C++20](https://img.shields.io/badge/C++-20-blue.svg?style=flat)
+[![Linux](https://img.shields.io/badge/platform-Linux-blue)](https://github.com/LocalClustering/HeidelbergMotifClustering)
 
-This repository is associated with the following papers:
+**Combinatorial algorithms for local motif clustering in graphs.** Given a seed node, find a well-characterized community by minimizing *motif conductance* — a measure based on the distribution of higher-order structures (triangles) rather than just edges.
 
- - "**Local Motif Clustering via (Hyper)Graph Partitioning**", which has been published as an extended abstract at [SoCS 2022](https://ojs.aaai.org/index.php/SOCS/article/view/21779) and as a full paper at [SIAM ALENEX 2023](https://doi.org/10.1137/1.9781611977561.ch9).
-Additionally, you can find a [technical report](https://arxiv.org/pdf/2205.06176.pdf) and our SoCS 2022 [poster](misc/SoCS_Poster.pdf).
+## Algorithms
 
- - "**Faster Local Motif Clustering via Maximum Flows**", which has been accept for publication as a full paper at ESA 2023.
-Here you can find a [technical report](https://arxiv.org/pdf/2301.07145.pdf).
+| Algorithm | Paper | Method | Binary |
+|-----------|-------|--------|--------|
+| **LMCHGP** | [ALENEX 2023](https://doi.org/10.1137/1.9781611977561.ch9) | Graph partitioning with triangle-weighted edges | `motif_clustering_graph` |
+| **SOCIAL** | [ESA 2023](https://arxiv.org/pdf/2301.07145.pdf) | Clique expansion + max-flow quotient-cut improvement (MQI) | `social` |
 
-If you publish results using our algorithms, please acknowledge our work by citing the corresponding papers:
+**SOCIAL** is generally faster and produces higher-quality clusters by using flow-based improvements instead of graph partitioning.
+
+## Quick Start
+
+```console
+# Clone with submodules
+git clone --recursive https://github.com/LocalClustering/HeidelbergMotifClustering.git
+cd HeidelbergMotifClustering
+
+# Build both algorithms
+cd SOCIAL && ./compile.sh && cd ..
+cd LMCHGP && ./compile.sh && cd ..
+
+# Run SOCIAL on a sample graph (find community around node 1)
+./social.sh --graph SOCIAL/examples/test_sample.graph --seed_node 1
+
+# Run LMCHGP on the same graph
+./lmchgp.sh --graph SOCIAL/examples/test_sample.graph --seed_node 1
+```
+
+## Usage
+
+### SOCIAL (recommended)
+
+```console
+./social.sh --graph <file> --seed_node <n> [options]
+```
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--graph <file>` | Path to graph file (METIS format) | *required* |
+| `--seed_node <n>` | Seed node, 1-indexed | *required* |
+| `--depths <d1:d2:...>` | BFS depths to explore | `1:2:3` |
+| `--triangle_count <n>` | Total triangles in graph | auto-computed |
+| `--timelimit <s>` | Time limit in seconds | `3600` |
+| `--fix_seed` | Fix seed node during MQI | off |
+| `--output <file>` | Write community to file | stdout only |
+| `--seed <n>` | Random seed | - |
+| `--quiet` | Suppress verbose output | off |
+
+**Examples:**
+```console
+# Cluster around node 42 with custom BFS depths
+./social.sh --graph network.graph --seed_node 42 --depths 2:3:4:5
+
+# Save community to file
+./social.sh --graph network.graph --seed_node 42 --output community.txt
+
+# With fixed seed node and time limit
+./social.sh --graph network.graph --seed_node 42 --fix_seed --timelimit 60
+```
+
+### LMCHGP
+
+```console
+./lmchgp.sh --graph <file> --seed_node <n> [options]
+```
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--graph <file>` | Path to graph file (METIS format) | *required* |
+| `--seed_node <n>` | Seed node, 1-indexed | *required* |
+| `--depths <d1:d2:...>` | BFS depths to explore | `1:2:3` |
+| `--beta <n>` | Random imbalance trials per depth | `3` |
+| `--triangle_count <n>` | Total triangles in graph | - |
+| `--timelimit <s>` | Time limit in seconds | `3600` |
+| `--label_prop` | Enable label propagation refinement | off |
+| `--output <file>` | Write community to file | stdout only |
+| `--seed <n>` | Random seed | - |
+| `--quiet` | Suppress verbose output | off |
+
+**Examples:**
+```console
+# Cluster with label propagation refinement
+./lmchgp.sh --graph network.graph --seed_node 42 --label_prop
+
+# More imbalance trials for better quality
+./lmchgp.sh --graph network.graph --seed_node 42 --beta 10 --depths 2:3:4
+```
+
+### Direct Binary Usage
+
+You can also call the binaries directly for full control over all parameters:
+
+```console
+# SOCIAL
+./SOCIAL/deploy/social network.graph --seed_node 5 --bfsdepth_parameter_string 1:2:3 \
+  --triangle_count 50000 --write_cluster --output_filename community.txt
+
+# LMCHGP
+./LMCHGP/deploy/motif_clustering_graph network.graph --seed_node 5 \
+  --bfsdepth_parameter_string 1:2:3 --beta 3 --preconfiguration strong \
+  --label_prop_ls --write_cluster --output_filename community.txt
+
+# Count triangles (SOCIAL includes a triangle counter)
+./SOCIAL/deploy/triangle_counter network.graph
+
+# Evaluate a clustering result
+./SOCIAL/deploy/evaluator network.graph --input_partition community.txt --triangle_count 50000
+```
+
+## Graph Format
+
+Input graphs use the [METIS format](http://glaros.dtc.umn.edu/gkhome/fetch/sw/metis/manual.pdf):
 
 ```
-@inproceedings{LocMotifClusHyperGraphPartition2023,
-  author    = {Adil Chhabra and
-               Marcelo Fonseca Faraj and
-               Christian Schulz},
-  title     = {Local Motif Clustering via (Hyper)Graph Partitioning},
-  booktitle = {Symposium on Algorithm Engineering and Experiments (ALENEX 23), January 22-23, 2023},
-  publisher = {{SIAM}},
-  doi       = {10.1137/1.9781611977561.ch9},
-  year      = {2023}
+<num_nodes> <num_edges>
+<neighbors of node 1>
+<neighbors of node 2>
+...
+```
+
+Example (`test_sample.graph` — 7 nodes, 12 edges):
+```
+7 12
+2 3 7
+1 3 4 5
+1 2 4 5
+2 3 5 6 7
+2 3 4
+4 7
+1 4 6
+```
+
+## Output
+
+Both algorithms print:
+- **Motif conductance** — quality score of the detected community (lower is better)
+- **Community size** — number of nodes in the cluster
+- **Timing** — total clustering and triangle enumeration time
+
+With `--output`, the community is written as a list of node IDs (one per line).
+
+## Requirements
+
+- Linux (64-bit)
+- C++20 compiler (GCC 7+ or Clang 11+)
+- CMake >= 3.16
+- Boost Program Options (`libboost-program-options-dev`)
+- Intel TBB (`libtbb-dev`)
+- hwloc (`libhwloc-dev`)
+- OpenMPI (LMCHGP only)
+
+Install on Ubuntu/Debian:
+```console
+sudo apt-get install libboost-program-options-dev libtbb-dev libhwloc-dev libnuma-dev numactl openmpi-bin
+```
+
+## Citation
+
+If you use **LMCHGP**, please cite:
+```bibtex
+@inproceedings{DBLP:conf/alenex/ChhabraF023,
+  author       = {Adil Chhabra and
+                  Marcelo Fonseca Faraj and
+                  Christian Schulz},
+  title        = {Local Motif Clustering via (Hyper)Graph Partitioning},
+  booktitle    = {Proceedings of the 25th Symposium on Algorithm Engineering and Experiments,
+                  {ALENEX} 2023, Florence, Italy, January 22-23, 2023},
+  pages        = {96--109},
+  publisher    = {{SIAM}},
+  year         = {2023},
+  doi          = {10.1137/1.9781611977561.CH9}
 }
 ```
 
-```
-@inproceedings{FastLocMotifClusMaxFlows2023,
-  author    = {Adil Chhabra and
-               Marcelo Fonseca Faraj and
-               Christian Schulz},
-  title     = {Faster Local Motif Clustering via Maximum Flows},
-  booktitle = {European Symposium on Algorithms ({ESA} 2023), September 4-6, 2023},
-  publisher = {Schloss Dagstuhl - Leibniz-Zentrum f{\"{u}}r Informatik},
-  series    = {LIPIcs},
-  year      = {2023}
+If you use **SOCIAL**, please cite:
+```bibtex
+@inproceedings{DBLP:conf/esa/ChhabraF023,
+  author       = {Adil Chhabra and
+                  Marcelo Fonseca Faraj and
+                  Christian Schulz},
+  title        = {Faster Local Motif Clustering via Maximum Flows},
+  booktitle    = {31st Annual European Symposium on Algorithms, {ESA} 2023, Amsterdam,
+                  The Netherlands, September 4-6, 2023},
+  series       = {LIPIcs},
+  volume       = {274},
+  pages        = {34:1--34:16},
+  publisher    = {Schloss Dagstuhl - Leibniz-Zentrum f{\"{u}}r Informatik},
+  year         = {2023},
+  doi          = {10.4230/LIPIcs.ESA.2023.34}
 }
 ```
 
-Repository Structure
------------
+## License
 
-This repository contains the following subfolders and files:
-
- - [LMCHGP/](LMCHGP/) - Graph-based version of our algorithm proposed in "**Local Motif Clustering via (Hyper)Graph Partitioning**".
- - [SOCIAL/](SOCIAL/) - Clique-expansion version of our algorithm proposed in "**Faster Local Motif Clustering via Maximum Flows**".
- - [experimental_data/](experimental_data/) - Full experimental data, code and scripts.
-
-
-Requirements to Compile Algorithms
------------
-
- - A 64-bit Linux operating system.
- - A modern, ![C++17](https://img.shields.io/badge/C++-17-blue.svg?style=flat)-ready compiler such as `g++` version 7 or higher or `clang` version 11.0.3 or higher.
- - The cmake build system (>= 3.16).
- - The Boost - Program Options library and the boost header files (>= 1.48).
- - The Intel Thread Building Blocks library (TBB)
- - The Portable Hardware Locality library (hwloc)
- - An MPI implementation, e.g., [OpenMPI](https://www.open-mpi.org/) or [MPICH](https://www.mpich.org)
-
-Cloning Repository
------------
-
-Clone this repository with the following command to include all necessary submodules:
-
-```console
-git clone --depth=2 --recursive https://github.com/LocalClustering/HeidelbergMotifClustering.git
-```
-
-Building
------------
-
-First of all, install the required depedencies using the following command (for linux):
-
-```console
-sudo apt-get install libboost-program-options-dev libnuma-dev numactl libhwloc-dev moreutils linux-tools-common linux-tools-generic libtbb-dev openmpi-bin
-```
-
-Then, just run run the following command inside the folder of the desired algorithm:
-
-```console
-./compile.sh
-```
-
-Running 
------------
-
-For running the algorithms, see instructions in the respective folders
-
+MIT License. See [LICENSE](LICENSE) for details.

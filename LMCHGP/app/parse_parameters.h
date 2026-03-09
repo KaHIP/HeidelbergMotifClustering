@@ -381,7 +381,7 @@ int parse_parameters(int argn, char **argv,
 		triangle_count,
 		print_cut,
                 filename_output, 
-		/* write_cluster, */
+		write_cluster,
 		repetition_timelimit,
 #elif defined MODE_MOTIF_CLUSTERING_GRAPH_PARALLEL
                 seed_node,
