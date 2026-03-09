@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="seed-glow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="64" fill="url(#bg)"/>
+
+  <!-- Cluster zone (subtle) -->
+  <ellipse cx="256" cy="230" rx="130" ry="120" fill="#3b82f6" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="8 4" opacity="0.12"/>
+
+  <!-- Outer edges (dashed, purple) -->
+  <line x1="160" y1="200" x2="100" y2="150" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.5"/>
+  <line x1="160" y1="200" x2="90" y2="260" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.5"/>
+  <line x1="350" y1="200" x2="420" y2="140" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.5"/>
+  <line x1="350" y1="200" x2="425" y2="270" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.5"/>
+  <line x1="210" y1="310" x2="130" y2="370" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.5"/>
+  <line x1="300" y1="310" x2="370" y2="380" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.5"/>
+  <line x1="100" y1="150" x2="90" y2="260" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="5 3" opacity="0.3"/>
+  <line x1="420" y1="140" x2="425" y2="270" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="5 3" opacity="0.3"/>
+
+  <!-- Community edges (solid, blue) -->
+  <line x1="256" y1="155" x2="160" y2="200" stroke="#60a5fa" stroke-width="2.5" filter="url(#glow)"/>
+  <line x1="256" y1="155" x2="350" y2="200" stroke="#60a5fa" stroke-width="2.5" filter="url(#glow)"/>
+  <line x1="160" y1="200" x2="350" y2="200" stroke="#60a5fa" stroke-width="2.5" filter="url(#glow)"/>
+  <line x1="256" y1="155" x2="210" y2="310" stroke="#60a5fa" stroke-width="2.5" filter="url(#glow)"/>
+  <line x1="256" y1="155" x2="300" y2="310" stroke="#60a5fa" stroke-width="2.5" filter="url(#glow)"/>
+  <line x1="160" y1="200" x2="210" y2="310" stroke="#60a5fa" stroke-width="2.5" filter="url(#glow)"/>
+  <line x1="350" y1="200" x2="300" y2="310" stroke="#60a5fa" stroke-width="2.5" filter="url(#glow)"/>
+  <line x1="210" y1="310" x2="300" y2="310" stroke="#60a5fa" stroke-width="2.5" filter="url(#glow)"/>
+
+  <!-- Outer nodes (purple, smaller) -->
+  <circle cx="100" cy="150" r="12" fill="#c4b5fd" stroke="#8b5cf6" stroke-width="2" opacity="0.7"/>
+  <circle cx="90" cy="260" r="12" fill="#c4b5fd" stroke="#8b5cf6" stroke-width="2" opacity="0.7"/>
+  <circle cx="420" cy="140" r="12" fill="#c4b5fd" stroke="#8b5cf6" stroke-width="2" opacity="0.7"/>
+  <circle cx="425" cy="270" r="12" fill="#c4b5fd" stroke="#8b5cf6" stroke-width="2" opacity="0.7"/>
+  <circle cx="130" cy="370" r="12" fill="#c4b5fd" stroke="#8b5cf6" stroke-width="2" opacity="0.7"/>
+  <circle cx="370" cy="380" r="12" fill="#c4b5fd" stroke="#8b5cf6" stroke-width="2" opacity="0.7"/>
+
+  <!-- Community nodes (blue) -->
+  <circle cx="160" cy="200" r="18" fill="#3b82f6" stroke="#93c5fd" stroke-width="2.5" filter="url(#glow)"/>
+  <circle cx="350" cy="200" r="18" fill="#3b82f6" stroke="#93c5fd" stroke-width="2.5" filter="url(#glow)"/>
+  <circle cx="210" cy="310" r="18" fill="#3b82f6" stroke="#93c5fd" stroke-width="2.5" filter="url(#glow)"/>
+  <circle cx="300" cy="310" r="18" fill="#3b82f6" stroke="#93c5fd" stroke-width="2.5" filter="url(#glow)"/>
+
+  <!-- Seed node (amber, larger, glowing) -->
+  <circle cx="256" cy="155" r="24" fill="#f59e0b" stroke="#fbbf24" stroke-width="3" filter="url(#seed-glow)"/>
+
+  <!-- Triangle highlights (subtle fill showing motifs) -->
+  <polygon points="256,155 160,200 350,200" fill="#60a5fa" opacity="0.06"/>
+  <polygon points="256,155 160,200 210,310" fill="#60a5fa" opacity="0.06"/>
+  <polygon points="256,155 350,200 300,310" fill="#60a5fa" opacity="0.06"/>
+
+  <!-- Text -->
+  <text x="256" y="445" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="#f8fafc" letter-spacing="1">LocalClustering</text>
+  <text x="256" y="475" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#94a3b8" letter-spacing="2">MOTIF · COMMUNITY · DETECTION</text>
+</svg>

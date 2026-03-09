@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo/localclustering-logo.png" alt="LocalClustering Logo" width="256"/>
+</p>
+
 # Heidelberg Motif Clustering v1.0.0
 
 [![Build](https://github.com/LocalClustering/HeidelbergMotifClustering/actions/workflows/ci.yml/badge.svg)](https://github.com/LocalClustering/HeidelbergMotifClustering/actions/workflows/ci.yml)
