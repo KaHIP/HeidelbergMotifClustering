@@ -2,11 +2,17 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![C++20](https://img.shields.io/badge/C++-20-blue.svg?style=flat)
+[![CMake](https://img.shields.io/badge/build-CMake-blue)](https://cmake.org/)
 [![Linux](https://img.shields.io/badge/platform-Linux-blue)](https://github.com/LocalClustering/HeidelbergMotifClustering)
 [![GitHub Stars](https://img.shields.io/github/stars/LocalClustering/HeidelbergMotifClustering)](https://github.com/LocalClustering/HeidelbergMotifClustering/stargazers)
+[![GitHub Issues](https://img.shields.io/github/issues/LocalClustering/HeidelbergMotifClustering)](https://github.com/LocalClustering/HeidelbergMotifClustering/issues)
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/LocalClustering/HeidelbergMotifClustering)](https://github.com/LocalClustering/HeidelbergMotifClustering/commits)
 [![ALENEX 2023](https://img.shields.io/badge/ALENEX-2023-green)](https://doi.org/10.1137/1.9781611977561.ch9)
 [![ESA 2023](https://img.shields.io/badge/ESA-2023-green)](https://doi.org/10.4230/LIPIcs.ESA.2023.34)
+[![arXiv](https://img.shields.io/badge/arXiv-2205.06176-b31b1b)](https://arxiv.org/abs/2205.06176)
+[![arXiv](https://img.shields.io/badge/arXiv-2301.07145-b31b1b)](https://arxiv.org/abs/2301.07145)
 [![Agent-Ready](https://img.shields.io/badge/agent--ready-yes-brightgreen)](https://github.com/LocalClustering/HeidelbergMotifClustering)
+[![Heidelberg University](https://img.shields.io/badge/Heidelberg-University-red)](https://www.uni-heidelberg.de)
 
 **Combinatorial algorithms for local motif clustering in graphs.** Given a seed node, find a well-characterized community by minimizing *motif conductance* — a measure based on the distribution of higher-order structures (triangles) rather than just edges.
 
