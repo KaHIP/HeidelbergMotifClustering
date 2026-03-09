@@ -1,0 +1,40 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libboost-program-options-dev libtbb-dev libhwloc-dev libnuma-dev openmpi-bin libopenmpi-dev
+
+      - name: Build SOCIAL
+        run: |
+          cmake -B build_social -S SOCIAL -DCMAKE_BUILD_TYPE=Release -DNONATIVEOPTIMIZATIONS=ON
+          cmake --build build_social -j$(nproc)
+
+      - name: Build LMCHGP
+        run: |
+          cmake -B build_lmchgp -S LMCHGP -DCMAKE_BUILD_TYPE=Release -DNONATIVEOPTIMIZATIONS=ON
+          cmake --build build_lmchgp -j$(nproc)
+
+      - name: Smoke test SOCIAL
+        run: |
+          ./build_social/social examples/test_sample.graph --seed_node 1 --bfsdepth_parameter_string 1:2:3 2>&1 | tee output.txt
+          grep -q "Motif Conductance" output.txt
+
+      - name: Smoke test LMCHGP
+        run: |
+          ./build_lmchgp/motif_clustering_graph examples/test_sample.graph --seed_node 1 --bfsdepth_parameter_string 1:2:3 2>&1 | tee output.txt
+          grep -q "Motif Conductance" output.txt

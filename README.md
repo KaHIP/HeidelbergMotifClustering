@@ -1,5 +1,7 @@
-# Heidelberg Motif Clustering
+# Heidelberg Motif Clustering v1.0.0
 
+[![Build](https://github.com/LocalClustering/HeidelbergMotifClustering/actions/workflows/ci.yml/badge.svg)](https://github.com/LocalClustering/HeidelbergMotifClustering/actions/workflows/ci.yml)
+[![GitHub Release](https://img.shields.io/github/v/release/LocalClustering/HeidelbergMotifClustering)](https://github.com/LocalClustering/HeidelbergMotifClustering/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![C++20](https://img.shields.io/badge/C++-20-blue.svg?style=flat)
 [![CMake](https://img.shields.io/badge/build-CMake-blue)](https://cmake.org/)
