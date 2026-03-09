@@ -11,6 +11,7 @@
 [![ESA 2023](https://img.shields.io/badge/ESA-2023-green)](https://doi.org/10.4230/LIPIcs.ESA.2023.34)
 [![arXiv](https://img.shields.io/badge/arXiv-2205.06176-b31b1b)](https://arxiv.org/abs/2205.06176)
 [![arXiv](https://img.shields.io/badge/arXiv-2301.07145-b31b1b)](https://arxiv.org/abs/2301.07145)
+[![Homebrew](https://img.shields.io/badge/homebrew-available-orange)](https://github.com/LocalClustering/homebrew-motifclustering)
 [![Agent-Ready](https://img.shields.io/badge/agent--ready-yes-brightgreen)](https://github.com/LocalClustering/HeidelbergMotifClustering)
 [![Heidelberg University](https://img.shields.io/badge/Heidelberg-University-red)](https://www.uni-heidelberg.de)
 
@@ -25,7 +26,18 @@
 
 **SOCIAL** is generally faster and produces higher-quality clusters by using flow-based improvements instead of graph partitioning.
 
-## Quick Start
+## Install via Homebrew
+
+```console
+brew install LocalClustering/motifclustering/motifclustering
+```
+
+Then run directly:
+```console
+heidelberg_motif_clustering --algorithm social --graph network.graph --seed_node 5
+```
+
+## Quick Start (from source)
 
 ```console
 # Clone with submodules
