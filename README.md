@@ -1,10 +1,12 @@
 # Heidelberg Motif Clustering
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/93d164647e654bf2a814f5101fdf3481)](https://www.codacy.com/gh/LocalClustering/HeidelbergMotifClustering/dashboard?utm_source=github.com&utm_medium=referral&utm_content=LocalClustering/HeidelbergMotifClustering&utm_campaign=Badge_Grade)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FLocalClustering%2FHeidelbergMotifClustering.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FLocalClustering%2FHeidelbergMotifClustering?ref=badge_shield)
 ![C++20](https://img.shields.io/badge/C++-20-blue.svg?style=flat)
 [![Linux](https://img.shields.io/badge/platform-Linux-blue)](https://github.com/LocalClustering/HeidelbergMotifClustering)
+[![GitHub Stars](https://img.shields.io/github/stars/LocalClustering/HeidelbergMotifClustering)](https://github.com/LocalClustering/HeidelbergMotifClustering/stargazers)
+[![ALENEX 2023](https://img.shields.io/badge/ALENEX-2023-green)](https://doi.org/10.1137/1.9781611977561.ch9)
+[![ESA 2023](https://img.shields.io/badge/ESA-2023-green)](https://doi.org/10.4230/LIPIcs.ESA.2023.34)
+[![Agent-Ready](https://img.shields.io/badge/agent--ready-yes-brightgreen)](https://github.com/LocalClustering/HeidelbergMotifClustering)
 
 **Combinatorial algorithms for local motif clustering in graphs.** Given a seed node, find a well-characterized community by minimizing *motif conductance* — a measure based on the distribution of higher-order structures (triangles) rather than just edges.
 
