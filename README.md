@@ -29,70 +29,43 @@ cd SOCIAL && ./compile.sh && cd ..
 cd LMCHGP && ./compile.sh && cd ..
 
 # Run SOCIAL on a sample graph (find community around node 1)
-./social.sh --graph SOCIAL/examples/test_sample.graph --seed_node 1
+./heidelberg_motif_clustering --algorithm social --graph examples/test_sample.graph --seed_node 1
 
 # Run LMCHGP on the same graph
-./lmchgp.sh --graph SOCIAL/examples/test_sample.graph --seed_node 1
+./heidelberg_motif_clustering --algorithm lmchgp --graph examples/test_sample.graph --seed_node 1
 ```
 
 ## Usage
 
-### SOCIAL (recommended)
-
 ```console
-./social.sh --graph <file> --seed_node <n> [options]
+./heidelberg_motif_clustering --algorithm <social|lmchgp> --graph <file> --seed_node <n> [options]
 ```
 
 | Option | Description | Default |
 |--------|-------------|---------|
+| `--algorithm <name>` | Algorithm: `social` (recommended) or `lmchgp` | *required* |
 | `--graph <file>` | Path to graph file (METIS format) | *required* |
 | `--seed_node <n>` | Seed node, 1-indexed | *required* |
 | `--depths <d1:d2:...>` | BFS depths to explore | `1:2:3` |
-| `--triangle_count <n>` | Total triangles in graph | auto-computed |
+| `--triangle_count <n>` | Total triangles in graph | auto-computed (social) |
 | `--timelimit <s>` | Time limit in seconds | `3600` |
-| `--fix_seed` | Fix seed node during MQI | off |
 | `--output <file>` | Write community to file | stdout only |
 | `--seed <n>` | Random seed | - |
 | `--quiet` | Suppress verbose output | off |
+| `--fix_seed` | Fix seed node during MQI (social only) | off |
+| `--beta <n>` | Random imbalance trials per depth (lmchgp only) | `3` |
+| `--label_prop` | Label propagation local search (lmchgp only) | off |
 
 **Examples:**
 ```console
-# Cluster around node 42 with custom BFS depths
-./social.sh --graph network.graph --seed_node 42 --depths 2:3:4:5
+# SOCIAL — cluster around node 42 with custom BFS depths
+./heidelberg_motif_clustering --algorithm social --graph network.graph --seed_node 42 --depths 2:3:4:5
 
-# Save community to file
-./social.sh --graph network.graph --seed_node 42 --output community.txt
+# SOCIAL — save community to file
+./heidelberg_motif_clustering --algorithm social --graph network.graph --seed_node 42 --output community.txt
 
-# With fixed seed node and time limit
-./social.sh --graph network.graph --seed_node 42 --fix_seed --timelimit 60
-```
-
-### LMCHGP
-
-```console
-./lmchgp.sh --graph <file> --seed_node <n> [options]
-```
-
-| Option | Description | Default |
-|--------|-------------|---------|
-| `--graph <file>` | Path to graph file (METIS format) | *required* |
-| `--seed_node <n>` | Seed node, 1-indexed | *required* |
-| `--depths <d1:d2:...>` | BFS depths to explore | `1:2:3` |
-| `--beta <n>` | Random imbalance trials per depth | `3` |
-| `--triangle_count <n>` | Total triangles in graph | - |
-| `--timelimit <s>` | Time limit in seconds | `3600` |
-| `--label_prop` | Enable label propagation refinement | off |
-| `--output <file>` | Write community to file | stdout only |
-| `--seed <n>` | Random seed | - |
-| `--quiet` | Suppress verbose output | off |
-
-**Examples:**
-```console
-# Cluster with label propagation refinement
-./lmchgp.sh --graph network.graph --seed_node 42 --label_prop
-
-# More imbalance trials for better quality
-./lmchgp.sh --graph network.graph --seed_node 42 --beta 10 --depths 2:3:4
+# LMCHGP — with label propagation refinement
+./heidelberg_motif_clustering --algorithm lmchgp --graph network.graph --seed_node 42 --label_prop
 ```
 
 ### Direct Binary Usage
@@ -106,7 +79,7 @@ You can also call the binaries directly for full control over all parameters:
 
 # LMCHGP
 ./LMCHGP/deploy/motif_clustering_graph network.graph --seed_node 5 \
-  --bfsdepth_parameter_string 1:2:3 --beta 3 --preconfiguration strong \
+  --bfsdepth_parameter_string 1:2:3 --beta 3 \
   --label_prop_ls --write_cluster --output_filename community.txt
 
 # Count triangles (SOCIAL includes a triangle counter)

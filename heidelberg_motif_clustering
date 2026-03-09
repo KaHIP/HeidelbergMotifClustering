@@ -1,0 +1,148 @@
+#!/bin/bash
+# heidelberg_motif_clustering — CLI for Heidelberg Motif Clustering algorithms
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+usage() {
+    cat <<'EOF'
+Usage: heidelberg_motif_clustering --algorithm <social|lmchgp> --graph <file> --seed_node <n> [options]
+
+Combinatorial algorithms for local motif clustering in graphs.
+Finds a community around a seed node by minimizing motif conductance.
+
+Required:
+  --algorithm <name>       Algorithm: 'social' (recommended) or 'lmchgp'
+  --graph <file>           Path to graph file (METIS format)
+  --seed_node <n>          Seed node (1-indexed)
+
+Options:
+  --depths <d1:d2:...>     BFS depths to explore (default: 1:2:3)
+  --triangle_count <n>     Total triangles in graph (auto-computed for social)
+  --timelimit <s>          Time limit in seconds (default: 3600)
+  --output <file>          Write community to file
+  --seed <n>               Random seed
+  --quiet                  Suppress output
+  --help                   Print this help
+
+SOCIAL-specific:
+  --fix_seed               Fix seed node during MQI improvement
+
+LMCHGP-specific:
+  --beta <n>               Random imbalance trials per depth (default: 3)
+  --label_prop             Enable label propagation local search
+
+Examples:
+  # SOCIAL (recommended, faster)
+  heidelberg_motif_clustering --algorithm social --graph network.graph --seed_node 5
+
+  # LMCHGP with label propagation
+  heidelberg_motif_clustering --algorithm lmchgp --graph network.graph --seed_node 5 --label_prop
+
+  # Save community to file
+  heidelberg_motif_clustering --algorithm social --graph network.graph --seed_node 5 --output community.txt
+EOF
+    exit 0
+}
+
+# Defaults
+ALGORITHM=""
+GRAPH=""
+SEED_NODE=""
+DEPTHS="1:2:3"
+BETA=""
+TRIANGLE_COUNT=""
+TIMELIMIT=""
+LABEL_PROP=""
+FIX_SEED=""
+OUTPUT=""
+SEED=""
+QUIET=""
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --algorithm)      ALGORITHM="$2"; shift 2 ;;
+        --graph)          GRAPH="$2"; shift 2 ;;
+        --seed_node)      SEED_NODE="$2"; shift 2 ;;
+        --depths)         DEPTHS="$2"; shift 2 ;;
+        --beta)           BETA="$2"; shift 2 ;;
+        --triangle_count) TRIANGLE_COUNT="$2"; shift 2 ;;
+        --timelimit)      TIMELIMIT="$2"; shift 2 ;;
+        --label_prop)     LABEL_PROP=1; shift ;;
+        --fix_seed)       FIX_SEED=1; shift ;;
+        --output)         OUTPUT="$2"; shift 2 ;;
+        --seed)           SEED="$2"; shift 2 ;;
+        --quiet)          QUIET=1; shift ;;
+        --help|-h)        usage ;;
+        *)                echo "Unknown option: $1"; usage ;;
+    esac
+done
+
+if [ -z "$ALGORITHM" ] || [ -z "$GRAPH" ] || [ -z "$SEED_NODE" ]; then
+    echo "Error: --algorithm, --graph, and --seed_node are required."
+    echo ""
+    usage
+fi
+
+if [ "$ALGORITHM" = "social" ]; then
+    BINARY="$SCRIPT_DIR/SOCIAL/deploy/social"
+    TRIANGLE_COUNTER="$SCRIPT_DIR/SOCIAL/deploy/triangle_counter"
+
+    if [ ! -f "$BINARY" ]; then
+        echo "Error: Binary not found at $BINARY"
+        echo "Build first: cd SOCIAL && ./compile.sh"
+        exit 1
+    fi
+
+    # Auto-compute triangle count if not provided
+    if [ -z "$TRIANGLE_COUNT" ] && [ -f "$TRIANGLE_COUNTER" ]; then
+        echo "Counting triangles..."
+        TRIANGLE_COUNT=$("$TRIANGLE_COUNTER" "$GRAPH" 2>/dev/null | grep -oP 'triangles\s*[=:]\s*\K[0-9]+' || echo "")
+    fi
+
+    ARGS=("$GRAPH")
+    ARGS+=(--seed_node "$SEED_NODE")
+    ARGS+=(--bfsdepth_parameter_string "$DEPTHS")
+
+    [ -n "$TRIANGLE_COUNT" ] && ARGS+=(--triangle_count "$TRIANGLE_COUNT")
+    [ -n "$TIMELIMIT" ]      && ARGS+=(--repetition_timelimit "$TIMELIMIT")
+    [ -n "$FIX_SEED" ]       && ARGS+=(--fix_seed_node)
+    [ -n "$SEED" ]           && ARGS+=(--seed "$SEED")
+    [ -n "$QUIET" ]          && ARGS+=(--suppress_output)
+
+    if [ -n "$OUTPUT" ]; then
+        ARGS+=(--write_cluster --output_filename "$OUTPUT")
+    fi
+
+    exec "$BINARY" "${ARGS[@]}"
+
+elif [ "$ALGORITHM" = "lmchgp" ]; then
+    BINARY="$SCRIPT_DIR/LMCHGP/deploy/motif_clustering_graph"
+
+    if [ ! -f "$BINARY" ]; then
+        echo "Error: Binary not found at $BINARY"
+        echo "Build first: cd LMCHGP && ./compile.sh"
+        exit 1
+    fi
+
+    ARGS=("$GRAPH")
+    ARGS+=(--seed_node "$SEED_NODE")
+    ARGS+=(--bfsdepth_parameter_string "$DEPTHS")
+
+    [ -n "$BETA" ]           && ARGS+=(--beta "$BETA")
+    [ -n "$TRIANGLE_COUNT" ] && ARGS+=(--triangle_count "$TRIANGLE_COUNT")
+    [ -n "$TIMELIMIT" ]      && ARGS+=(--repetition_timelimit "$TIMELIMIT")
+    [ -n "$LABEL_PROP" ]     && ARGS+=(--label_prop_ls)
+    [ -n "$SEED" ]           && ARGS+=(--seed "$SEED")
+    [ -n "$QUIET" ]          && ARGS+=(--suppress_output)
+
+    if [ -n "$OUTPUT" ]; then
+        ARGS+=(--write_cluster --output_filename "$OUTPUT")
+    fi
+
+    exec "$BINARY" "${ARGS[@]}"
+
+else
+    echo "Error: Unknown algorithm '$ALGORITHM'. Use 'social' or 'lmchgp'."
+    exit 1
+fi
