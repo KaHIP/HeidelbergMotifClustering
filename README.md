@@ -1,20 +1,20 @@
 # Heidelberg Motif Clustering v1.0.0
 
-[![Build](https://github.com/LocalClustering/HeidelbergMotifClustering/actions/workflows/ci.yml/badge.svg)](https://github.com/LocalClustering/HeidelbergMotifClustering/actions/workflows/ci.yml)
-[![GitHub Release](https://img.shields.io/github/v/release/LocalClustering/HeidelbergMotifClustering)](https://github.com/LocalClustering/HeidelbergMotifClustering/releases/latest)
+[![Build](https://github.com/KaHIP/HeidelbergMotifClustering/actions/workflows/ci.yml/badge.svg)](https://github.com/KaHIP/HeidelbergMotifClustering/actions/workflows/ci.yml)
+[![GitHub Release](https://img.shields.io/github/v/release/KaHIP/HeidelbergMotifClustering)](https://github.com/KaHIP/HeidelbergMotifClustering/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![C++20](https://img.shields.io/badge/C++-20-blue.svg?style=flat)
 [![CMake](https://img.shields.io/badge/build-CMake-blue)](https://cmake.org/)
-[![Linux](https://img.shields.io/badge/platform-Linux-blue)](https://github.com/LocalClustering/HeidelbergMotifClustering)
-[![GitHub Stars](https://img.shields.io/github/stars/LocalClustering/HeidelbergMotifClustering)](https://github.com/LocalClustering/HeidelbergMotifClustering/stargazers)
-[![GitHub Issues](https://img.shields.io/github/issues/LocalClustering/HeidelbergMotifClustering)](https://github.com/LocalClustering/HeidelbergMotifClustering/issues)
-[![GitHub Last Commit](https://img.shields.io/github/last-commit/LocalClustering/HeidelbergMotifClustering)](https://github.com/LocalClustering/HeidelbergMotifClustering/commits)
+[![Linux](https://img.shields.io/badge/platform-Linux-blue)](https://github.com/KaHIP/HeidelbergMotifClustering)
+[![GitHub Stars](https://img.shields.io/github/stars/KaHIP/HeidelbergMotifClustering)](https://github.com/KaHIP/HeidelbergMotifClustering/stargazers)
+[![GitHub Issues](https://img.shields.io/github/issues/KaHIP/HeidelbergMotifClustering)](https://github.com/KaHIP/HeidelbergMotifClustering/issues)
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/KaHIP/HeidelbergMotifClustering)](https://github.com/KaHIP/HeidelbergMotifClustering/commits)
 [![ALENEX 2023](https://img.shields.io/badge/ALENEX-2023-green)](https://doi.org/10.1137/1.9781611977561.ch9)
 [![ESA 2023](https://img.shields.io/badge/ESA-2023-green)](https://doi.org/10.4230/LIPIcs.ESA.2023.34)
 [![arXiv](https://img.shields.io/badge/arXiv-2205.06176-b31b1b)](https://arxiv.org/abs/2205.06176)
 [![arXiv](https://img.shields.io/badge/arXiv-2301.07145-b31b1b)](https://arxiv.org/abs/2301.07145)
-[![Homebrew](https://img.shields.io/badge/homebrew-available-orange)](https://github.com/LocalClustering/homebrew-motifclustering)
-[![Agent-Ready](https://img.shields.io/badge/agent--ready-yes-brightgreen)](https://github.com/LocalClustering/HeidelbergMotifClustering)
+[![Homebrew](https://img.shields.io/badge/homebrew-available-orange)](https://github.com/KaHIP/homebrew-motifclustering)
+[![Agent-Ready](https://img.shields.io/badge/agent--ready-yes-brightgreen)](https://github.com/KaHIP/HeidelbergMotifClustering)
 [![Heidelberg University](https://img.shields.io/badge/Heidelberg-University-red)](https://www.uni-heidelberg.de)
 
 <p align="center">
@@ -35,7 +35,7 @@
 ## Install via Homebrew
 
 ```console
-brew install LocalClustering/motifclustering/motifclustering
+brew install KaHIP/motifclustering/motifclustering
 ```
 
 Then run directly:
@@ -47,7 +47,7 @@ heidelberg_motif_clustering --algorithm social --graph network.graph --seed_node
 
 ```console
 # Clone with submodules
-git clone --recursive https://github.com/LocalClustering/HeidelbergMotifClustering.git
+git clone --recursive https://github.com/KaHIP/HeidelbergMotifClustering.git
 cd HeidelbergMotifClustering
 
 # Build both algorithms
