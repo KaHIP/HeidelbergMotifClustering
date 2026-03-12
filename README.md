@@ -21,7 +21,7 @@
   <img src="logo/localclustering-logo.png" alt="LocalClustering Logo" width="256"/>
 </p>
 
-**Combinatorial algorithms for local motif clustering in graphs.** Given a seed node, find a well-characterized community by minimizing *motif conductance* — a measure based on the distribution of higher-order structures (triangles) rather than just edges.
+**Combinatorial algorithms for local motif clustering in graphs.** Given a seed node, find a well-characterized community by minimizing *motif conductance* — a measure based on the distribution of higher-order structures (triangles) rather than just edges.  Part of the [KaHIP](https://github.com/KaHIP) organization. 
 
 ## Algorithms
 
