@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="seed-glow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="640" fill="url(#bg)"/>
+
+  <!-- Cluster zone (subtle dashed ellipse) -->
+  <ellipse cx="300" cy="310" rx="180" ry="200" fill="#3b82f6" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="8 4" opacity="0.08"/>
+
+  <!-- Triangle motif highlights (subtle fill) -->
+  <polygon points="300,130 170,230 430,230" fill="#60a5fa" opacity="0.05"/>
+  <polygon points="300,130 170,230 220,400" fill="#60a5fa" opacity="0.05"/>
+  <polygon points="300,130 430,230 380,400" fill="#60a5fa" opacity="0.05"/>
+  <polygon points="170,230 220,400 380,400" fill="#60a5fa" opacity="0.04"/>
+
+  <!-- Outer edges (dashed, purple) -->
+  <line x1="170" y1="230" x2="80" y2="160" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.5"/>
+  <line x1="170" y1="230" x2="60" y2="310" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.5"/>
+  <line x1="430" y1="230" x2="530" y2="150" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.5"/>
+  <line x1="430" y1="230" x2="540" y2="310" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.5"/>
+  <line x1="220" y1="400" x2="120" y2="490" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.5"/>
+  <line x1="380" y1="400" x2="470" y2="500" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.5"/>
+  <line x1="80" y1="160" x2="60" y2="310" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="5 3" opacity="0.3"/>
+  <line x1="530" y1="150" x2="540" y2="310" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="5 3" opacity="0.3"/>
+  <line x1="300" y1="130" x2="350" y2="60" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.5"/>
+  <line x1="350" y1="60" x2="530" y2="150" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="5 3" opacity="0.3"/>
+
+  <!-- Community edges (solid, blue, glowing) -->
+  <line x1="300" y1="130" x2="170" y2="230" stroke="#60a5fa" stroke-width="2.5" filter="url(#glow)"/>
+  <line x1="300" y1="130" x2="430" y2="230" stroke="#60a5fa" stroke-width="2.5" filter="url(#glow)"/>
+  <line x1="170" y1="230" x2="430" y2="230" stroke="#60a5fa" stroke-width="2.5" filter="url(#glow)"/>
+  <line x1="300" y1="130" x2="220" y2="400" stroke="#60a5fa" stroke-width="2.5" filter="url(#glow)"/>
+  <line x1="300" y1="130" x2="380" y2="400" stroke="#60a5fa" stroke-width="2.5" filter="url(#glow)"/>
+  <line x1="170" y1="230" x2="220" y2="400" stroke="#60a5fa" stroke-width="2.5" filter="url(#glow)"/>
+  <line x1="430" y1="230" x2="380" y2="400" stroke="#60a5fa" stroke-width="2.5" filter="url(#glow)"/>
+  <line x1="220" y1="400" x2="380" y2="400" stroke="#60a5fa" stroke-width="2.5" filter="url(#glow)"/>
+
+  <!-- Outer nodes (purple, smaller) -->
+  <circle cx="80"  cy="160" r="10" fill="#c4b5fd" stroke="#8b5cf6" stroke-width="2" opacity="0.7"/>
+  <circle cx="60"  cy="310" r="10" fill="#c4b5fd" stroke="#8b5cf6" stroke-width="2" opacity="0.7"/>
+  <circle cx="530" cy="150" r="10" fill="#c4b5fd" stroke="#8b5cf6" stroke-width="2" opacity="0.7"/>
+  <circle cx="540" cy="310" r="10" fill="#c4b5fd" stroke="#8b5cf6" stroke-width="2" opacity="0.7"/>
+  <circle cx="120" cy="490" r="10" fill="#c4b5fd" stroke="#8b5cf6" stroke-width="2" opacity="0.7"/>
+  <circle cx="470" cy="500" r="10" fill="#c4b5fd" stroke="#8b5cf6" stroke-width="2" opacity="0.7"/>
+  <circle cx="350" cy="60"  r="10" fill="#c4b5fd" stroke="#8b5cf6" stroke-width="2" opacity="0.7"/>
+
+  <!-- Community nodes (blue) -->
+  <circle cx="170" cy="230" r="16" fill="#3b82f6" stroke="#93c5fd" stroke-width="2.5" filter="url(#glow)"/>
+  <circle cx="430" cy="230" r="16" fill="#3b82f6" stroke="#93c5fd" stroke-width="2.5" filter="url(#glow)"/>
+  <circle cx="220" cy="400" r="16" fill="#3b82f6" stroke="#93c5fd" stroke-width="2.5" filter="url(#glow)"/>
+  <circle cx="380" cy="400" r="16" fill="#3b82f6" stroke="#93c5fd" stroke-width="2.5" filter="url(#glow)"/>
+
+  <!-- Seed node (amber, larger, glowing) -->
+  <circle cx="300" cy="130" r="22" fill="#f59e0b" stroke="#fbbf24" stroke-width="3" filter="url(#seed-glow)"/>
+
+  <!-- Triangle labels (small delta symbols inside triangles) -->
+  <text x="300" y="210" text-anchor="middle" font-family="'DejaVu Sans', sans-serif" font-size="18" fill="#60a5fa" opacity="0.35">&#x25B3;</text>
+  <text x="240" y="280" text-anchor="middle" font-family="'DejaVu Sans', sans-serif" font-size="14" fill="#60a5fa" opacity="0.25">&#x25B3;</text>
+  <text x="365" y="280" text-anchor="middle" font-family="'DejaVu Sans', sans-serif" font-size="14" fill="#60a5fa" opacity="0.25">&#x25B3;</text>
+
+  <!-- Title -->
+  <text x="680" y="200" font-family="'DejaVu Sans', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="56" font-weight="700" fill="#f8fafc" letter-spacing="1">
+    Heidelberg
+  </text>
+  <text x="680" y="268" font-family="'DejaVu Sans', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="56" font-weight="700" fill="#f8fafc" letter-spacing="1">
+    <tspan fill="#f59e0b">Motif</tspan><tspan fill="#f8fafc">Clustering</tspan>
+  </text>
+
+  <!-- Separator -->
+  <line x1="680" y1="292" x2="1220" y2="292" stroke="#334155" stroke-width="2"/>
+
+  <!-- Subtitle -->
+  <text x="680" y="332" font-family="'DejaVu Sans', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" fill="#94a3b8">
+    Local Motif Clustering
+  </text>
+
+  <!-- Tagline -->
+  <text x="680" y="390" font-family="'DejaVu Sans', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" fill="#64748b">
+    Find communities by minimizing motif
+  </text>
+  <text x="680" y="418" font-family="'DejaVu Sans', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" fill="#64748b">
+    conductance using higher-order structures
+  </text>
+
+  <!-- Badge: Part of KaHIP -->
+  <rect x="680" y="455" width="150" height="30" rx="15" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="755" y="475" font-family="'DejaVu Sans', sans-serif" font-size="14" fill="#80cbc4" text-anchor="middle">Part of KaHIP</text>
+
+  <!-- Legend -->
+  <circle cx="690" cy="540" r="8" fill="#f59e0b" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="706" y="545" font-family="'DejaVu Sans', sans-serif" font-size="15" fill="#94a3b8">Seed node</text>
+
+  <circle cx="820" cy="540" r="7" fill="#3b82f6" stroke="#93c5fd" stroke-width="1.5"/>
+  <text x="834" y="545" font-family="'DejaVu Sans', sans-serif" font-size="15" fill="#94a3b8">Community</text>
+
+  <circle cx="960" cy="540" r="6" fill="#c4b5fd" stroke="#8b5cf6" stroke-width="1.5" opacity="0.7"/>
+  <text x="974" y="545" font-family="'DejaVu Sans', sans-serif" font-size="15" fill="#94a3b8">External</text>
+
+  <text x="1060" y="545" font-family="'DejaVu Sans', sans-serif" font-size="18" fill="#60a5fa" opacity="0.5">&#x25B3;</text>
+  <text x="1080" y="545" font-family="'DejaVu Sans', sans-serif" font-size="15" fill="#94a3b8">Motif</text>
+</svg>
