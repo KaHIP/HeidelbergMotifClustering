@@ -23,6 +23,8 @@
 
 **Combinatorial algorithms for local motif clustering in graphs.** Given a seed node, find a well-characterized community by minimizing *motif conductance* — a measure based on the distribution of higher-order structures (triangles) rather than just edges.  Part of the [KaHIP](https://github.com/KaHIP) organization. 
 
+> **Python Interface:** An easy-to-use Python interface for this software is available in [CHSZLabLib](https://github.com/CHSZLab/CHSZLabLib).
+
 ## Algorithms
 
 | Algorithm | Paper | Method | Binary |
